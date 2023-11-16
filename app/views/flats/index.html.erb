@@ -1,14 +1,35 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Flats</h1>
+<div class="row">
+  <h1>All our Flats</h1>
+</div>
+<div class="row"> <p>All <%= @flats.all.count %> flats<p></div>
 
-<div id="flats">
+<div class="row">
   <% @flats.each do |flat| %>
-    <%= render flat %>
-    <p>
-      <%= link_to "Show this flat", flat %>
-    </p>
+    <div class="col-md-4 mb-4">
+      <div class="card h-100">
+        <img src="https://source.unsplash.com/random/?building&<%= flat.id %>" class="card-img-top" alt="house" style="max-height:200px; object-fit:cover;">
+        <div class="card-body">
+          <h5 class="card-title"><%= flat.name %></h5>
+          <p class="card-text"><%= flat.description %></p>
+          <div class="d-flex">
+              <div class="d-flex align-items-center">
+                <i class="fa-solid fa-people-line"></i>
+                <span><%= flat.number_of_guests %></span>
+              </div>
+              <div class="d-flex align-items-center ms-3">
+                <i class="fa-solid fa-euro-sign"></i>
+                <span><%= flat.price_per_night %></span>
+              </div>
+            </div>
+        </div>
+        <div class="card-footer">
+          <%= link_to "More info", flat %>
+          <a class="ms-3 text-warning" href="/flats/<%= flat.id %>/edit">Edit</a>
+          <%= link_to "Delete", flat , data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "ms-3 text-danger" %>
+        </div>
+      </div>
+    </div>
   <% end %>
 </div>
-
-<%= link_to "New flat", new_flat_path %>
